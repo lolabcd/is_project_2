@@ -1,0 +1,55 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Download CSV Instructions {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="container-fluid px-2 px-md-4">
+  <div class="card card-body mx-3 mx-md-4 mt-4">
+    <div class="row gx-4 mb-2">
+      <div class="col-auto">
+        <h2 class="text-center">How to Download Your CSV Files</h2>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <p>Follow these simple steps to download your social media data as CSV files:</p>
+        <ol>
+          <li>Go to the <a href="https://business.facebook.com/adsmanager/" target="_blank">Meta Ads Manager</a>.</li>
+          <li>Log in using your credentials.</li>
+          <li>Navigate to the side bar on the left and click on 'insights'.</li>
+          <img src="/static/assets/img/insights.png"style="max-width: 80%; height: auto;" >
+          <li>Navigate to the "Results" section, where you see different insight options</li>
+          <img src="/static/assets/img/insights.png" style="max-width: 80%; height: auto;" > 
+          <li>Choose the report insights you want to export.</li>
+          <img src="/static/assets/img/insights.png" style="max-width: 80%; height: auto;">
+          <li>Click on the "Export" button and select "CSV" as the format.</li>
+          <li>Your CSV file will be downloaded to your device.</li>
+          <li>Click on the "UPLOAD"button below and upload your .csv file</li>
+        </ol>
+
+        
+         
+
+        <div class="alert alert-info" role="alert">
+          Tip: Download all insight types to ensure a comprehensive report
+        </div>
+
+        <div class="text-center">
+          <a href="https://business.facebook.com/adsmanager/" target="_blank" class="btn bg-gradient-primary w-50 my-4">Upload Files</a>
+        </div>
+      </div>
+    </div>
+
+    {% include 'includes/footer.html' %}
+  </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
