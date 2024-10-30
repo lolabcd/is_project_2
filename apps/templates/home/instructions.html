@@ -39,9 +39,15 @@
           Tip: Download all insight types to ensure a comprehensive report
         </div>
 
-        <div class="text-center">
-          <a href="https://business.facebook.com/adsmanager/" target="_blank" class="btn bg-gradient-primary w-50 my-4">Upload Files</a>
-        </div>
+        <div class="col-12 col-xl-4">
+          <div class="text-center">
+            <a class="nav-link text-white {% if 'notifications' in segment %} active bg-gradient-primary {% endif %}" 
+               href="/upload.html">
+              <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="material-icons opacity-10">web</i> <button type="submit" name="login" 
+                    class="btn bg-gradient-primary w-100 my-4 mb-2">Upload Files</button>
+              </div>
+          </div>
       </div>
     </div>
 
