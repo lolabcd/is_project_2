@@ -36,6 +36,7 @@ class Report(db.Model):
 
 class Users(db.Model, UserMixin):
     __tablename__ = 'Users'
+    
 
     user_id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True)
@@ -46,7 +47,7 @@ class Users(db.Model, UserMixin):
     last_name = db.Column(db.String(50), nullable=False)
     bio = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    
+
     def get_id(self):
         return str(self.user_id)  # Convert to string for compatibility
 

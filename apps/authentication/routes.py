@@ -3,18 +3,20 @@
 Copyright (c) 2019 - present AppSeed.us
 """
 
-from flask import render_template, redirect, request, url_for
+from flask import flash, render_template, redirect, request, url_for
 from flask_login import (
     current_user,
     login_user,
     logout_user
 )
+from wtforms import PasswordField
+
 
 from apps import db, login_manager
 from apps.authentication import blueprint
 from apps.authentication.forms import LoginForm, CreateAccountForm
-from apps.authentication.models import Users
-
+from apps.authentication.models import Role, Users
+from werkzeug.security import generate_password_hash  
 from apps.authentication.util import verify_pass
 
 
@@ -61,8 +63,11 @@ def register():
 
         username = request.form['username']
         email = request.form['email']
+        bio = request.form.get('bio')
+        password = request.form['password'] 
+        #role_name = request.form.get('role')  # Get role from form
 
-        # Check usename exists
+        # Check if username exists
         user = Users.query.filter_by(username=username).first()
         if user:
             return render_template('accounts/register.html',
@@ -70,19 +75,50 @@ def register():
                                    success=False,
                                    form=create_account_form)
 
-        # Check email exists
+        # Check if email exists
         user = Users.query.filter_by(email=email).first()
         if user:
             return render_template('accounts/register.html',
                                    msg='Email already registered',
                                    success=False,
                                    form=create_account_form)
+        
+        # Find role ID based on role_name
+       # role = Role.query.filter_by(role_name=role_name).first()
+       # if not role:
+            #flash("Invalid role selected")
+            #return render_template('accounts/register.html',
+                                   #msg='Invalid role',
+                                   #success=False,
+                                   #form=create_account_form)
 
-        # else we can create the user
-        user = Users(**request.form)
+        # Create new user with the role
+
+        # Capture additional fields from the form
+        first_name = request.form.get('first_name')
+        last_name = request.form.get('last_name')
+        # Hash the password and create a new user
+        hashed_password = generate_password_hash(password, method='sha256')
+        user = Users(
+            username=username,
+            email=email,
+            bio=bio,
+            password=hashed_password, # Store the hashed password
+            first_name=first_name,  
+            last_name=last_name, 
+        )
+
+        # Add user to database
         db.session.add(user)
         db.session.commit()
+        
+        # Redirect based on role
+       # if role_name == "Admin":
+           # return redirect(url_for('admin_blueprint.dashboard'))  # Admin dashboard route
+      #  else:
+      #      return redirect(url_for('home_blueprint.index'))  # Regular user page
 
+    
         # Delete user from session
         logout_user()
         
@@ -90,6 +126,8 @@ def register():
                                msg='Account created successfully.',
                                success=True,
                                form=create_account_form)
+    
+    
 
     else:
         return render_template('accounts/register.html', form=create_account_form)
